@@ -80,7 +80,7 @@ void Game:: Shuffle(){
 
     // Print the shuffled cards
     for(size_t j = 1; j<=this->Card_Of_game.size(); j++){
-        print_card(j);
+        //print_card(j);
     }
 }
 
@@ -91,8 +91,8 @@ void Game::print_stack(size_t g){
         else{
             cout<<p2->stack_card[g%26].Get_number()<<endl;
         }
-        // cout<<p1->stack_card.size()<<endl;
-        // cout<<p2->stack_card.size()<<endl;
+         cout<<p1->stack_card.size()<<endl;
+         cout<<p2->stack_card.size()<<endl;
 }
 
 void Game:: div_card(){
@@ -111,7 +111,10 @@ void Game:: div_card(){
 }
 
 
+ void Game::playTurn(){
 
+
+ }
 
 
 
@@ -134,9 +137,7 @@ void Game::printLog(){
 }// for each player prints basic statistics: win rate, cards won, <other stats you want to print>. Also print the draw rate and amount of draws that happand. (draw within a draw counts as 2 draws. )
 
 
- void Game::playTurn(){
 
- }
 
 
 void Game::printLastTurn() {
