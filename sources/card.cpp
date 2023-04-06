@@ -5,6 +5,8 @@
 namespace ariel{}
 using namespace  ariel;
 using namespace std;
+#include <vector>
+
 
 Card::Card(int Num, string sha , string Number){
     num = Num;

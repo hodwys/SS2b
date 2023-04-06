@@ -4,9 +4,11 @@
 #include <string>
 #include <stdio.h>
 #include <stdexcept>
+#include "card.hpp"
 
 using namespace std;
 #include "iostream"
+#include <stack>
 //#include "stdio.h"
 
 
@@ -15,11 +17,12 @@ class Player{
     private:
         std::string nameP;
         bool in_play;
-        vector<Card> cardesTaken;
-        stack<Card> stack_card;
+        vector<Card> cardes_Taken;
+       
  
     
     public:
+        vector<Card> stack_card;
         Player(){}
         Player(std::string name);
 

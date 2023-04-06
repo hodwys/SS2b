@@ -1,13 +1,13 @@
 # include "player.hpp"
 # include <string>
 #include <stdexcept>
-
+#include "card.hpp"
 
 Player::Player(std::string str){
     nameP=str;
     in_play = false;
-    this->cardesTaken = {};
-    this->stacksize = {};
+    this->cardes_Taken = {};
+    this->stack_card = {};
 }// constructor 
 
 int Player::stacksize(){
@@ -19,11 +19,11 @@ int Player::stacksize(){
 
 int Player::cardesTaken(){
 
-    return this->cardesTaken.size();
+    return this->cardes_Taken.size();
 
 }// prints the amount of cards this player has won. 
 
-string Plater::getString(){
+string Player::getString(){
     
     return this->nameP;
 }

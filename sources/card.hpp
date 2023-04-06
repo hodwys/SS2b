@@ -8,6 +8,8 @@ namespace ariel{}
 using namespace  ariel;
 #include <string>
 using namespace std;
+#include <vector>
+
 
 class Card{
 

@@ -8,7 +8,8 @@ using namespace  ariel;
 #include <string>
 #include "player.hpp"
 using namespace std;
-#include "Card.hpp"
+#include "card.hpp"
+#include <vector>
 
 
 
@@ -23,6 +24,16 @@ class Game{
     public:
         Game(){}
         Game(Player &One, Player &Two);
+
+        
+        void creating_the_card();
+        void print_card(size_t g);
+        void Shuffle();
+        void div_card();
+        void print_stack(size_t g);
+
+
+
 
         void playAll(); //playes the game untill the end
         void printWiner(); // prints the name of the winning player
