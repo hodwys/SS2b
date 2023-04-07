@@ -30,7 +30,7 @@ string Card ::Get_number(){
 
 void Card ::print_Card(){
 
-    cout << number << " of " << shape << endl;
+    cout << number << " of " << shape<<" " << endl;
 }
 
        

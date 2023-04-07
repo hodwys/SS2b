@@ -34,31 +34,31 @@ void Game::creating_the_card(){
     string s="";
     for(size_t j=1; j<53; j++){
         if(j<14){
-            s = "dim";
+            s = "dim ";
         }
         else if(j<27){
-            s = "heart";
+            s = "heart ";
         }
         else if(j<40){
-            s = "leaf";
+            s = "leaf ";
         }
         else{
-            s = "clover";
+            s = "clover ";
         }
         if((j) % 13 == 1){
-        this->Card_Of_game.push_back( Card(100,s,"Ace"));    
+        this->Card_Of_game.push_back( Card(100,s,"Ace "));    
         }
         else if(j%13 == 0){
 
-            this->Card_Of_game.push_back(Card(13,s,"King"));
+            this->Card_Of_game.push_back(Card(13,s,"King "));
         }
         else if(j%13 == 12){
 
-            this->Card_Of_game.push_back(Card(12,s,"Queen"));
+            this->Card_Of_game.push_back(Card(12,s,"Queen "));
         }
         else if(j%13 == 11){
 
-            this->Card_Of_game.push_back( Card(11,s,"Prince"));
+            this->Card_Of_game.push_back( Card(11,s,"Prince "));
         }
 
         else{
@@ -102,25 +102,26 @@ void Game:: div_card(){
             p2->stack_card.push_back(this->Card_Of_game[i]);  
         }
         
-        print_stack(i);
+       // print_stack(i);
     }
 }
 
 
 void Game::printWiner(){
 
-    if(p1-> cardes_Taken.size()>p2-> cardes_Taken.size()){
+    if(p1-> cardesTaken() > p2-> cardesTaken()){
 
-        cout<<p1->getString()<< "'winn" <<endl;
+        cout<<p1->getString()<< " wins. " <<endl;
     }
 
-    else if(p2-> cardes_Taken.size()>p1-> cardes_Taken.size()){
+    else if(p2-> cardesTaken() > p1-> cardesTaken()){
 
-        cout<<p2->getString()<<"winn" << endl;
+        cout<<p2->getString()<<" wins. " << endl;
     }
 
-    else{
-        cout<<"The game ended in a draw"<<endl;
+    else if(p2-> cardes_Taken.size() == p1-> cardes_Taken.size())
+    {
+        cout<<"The game ended in a draw. "<<endl;
     }
 
  } // prints the name of the winning player
@@ -129,27 +130,149 @@ void Game::printWiner(){
 
  void Game::playTurn(){
 
-    if(p2->stack_card.size()>0){
+    if(p2->stack_card.size()>0 && (p1->getString() != p2->getString())){
+
+        Card card1 = p1->stack_card.back();
+        p1->stack_card.pop_back();
+
+        Card card2 = p2->stack_card.back();
+        p2->stack_card.pop_back();
+
+        string one = p1->getString();
+        one += " played ";
+        one += card1.Get_number();
+        one += " of ";
+        one += card1.Get_shape();
 
 
+        string two = p2->getString();
+        two += " played ";
+        two += card2.Get_number();
+        two += " of ";
+        two += card2.Get_shape();
 
+        string print = one +two;
+
+
+// who gana
+
+        if(card1.Get_Num() > card2.Get_Num()){
+            print += p1->getString() + " wins ";
+            p1->cardes_Taken.push_back(card1);
+            p1->cardes_Taken.push_back(card2);
+            p1->count_win++;
+            Turn_Of_game.push_back(print);
+
+        }
+        else if(card2.Get_Num() > card1.Get_Num()){
+            print += p2->getString() + " wins ";
+            p2->cardes_Taken.push_back(card1);
+            p2->cardes_Taken.push_back(card2);
+            p2->count_win++;
+            Turn_Of_game.push_back(print);
         
+        }
+        else{
+            print +="Draw. ";
+          //  Turn_Of_game.push_back(print);
+
+            if(p2->stack_card.size() == 1){
+                //נשארו 2 קלפים לכל אחד
+                for(size_t j= 0; j<p1->stack_card.size(); j++){
+                    p1->cardes_Taken.push_back(p1->stack_card[j]);
+                    p2->cardes_Taken.push_back(p2->stack_card[j]);
+                }
+
+            }
+
+            while(p2->stack_card.size()>1 && card1.Get_Num() == card2.Get_Num()){
+                draw++;                 
+
+                vector<Card> Card_temp;
+                Card_temp.push_back(card1);
+                Card_temp.push_back(card2);
+
+                Card_temp.push_back(p1->stack_card.back());
+                p1->stack_card.pop_back();
+
+                Card_temp.push_back(p2->stack_card.back());
+                p2->stack_card.pop_back();
+
+                card1 = p1->stack_card.back();
+                p1->stack_card.pop_back();
+                card2 = p2->stack_card.back();
+                p2->stack_card.pop_back();
+                Card_temp.push_back(card1);
+                Card_temp.push_back(card2);
 
 
+                print += p1->getString();
+                print += " played ";
+                print += card1.Get_number();
+                print += " of ";
+                print += card1.Get_shape();
 
 
+                print += p2->getString();
+                print += " played ";
+                print += card2.Get_number();
+                print += " of ";
+                print += card2.Get_shape();
 
+
+                if(card1.Get_Num() > card2.Get_Num()){
+                    print += p1->getString() + " wins ";
+
+                    for(size_t i= 0; i<Card_temp.size(); i++ ){
+                        p1->cardes_Taken.push_back(Card_temp[i]);
+                    }
+                    p1->count_win++;
+                    break;                    
+                }
+
+                else if(card2.Get_Num() > card1.Get_Num()){
+                    print += p2->getString() + " wins   ";
+                    for(size_t i= 0; i<Card_temp.size(); i++){
+                        p2->cardes_Taken.push_back(Card_temp[i]);
+                    }
+                    p2->count_win++;
+                    break;
+                }
+
+                else{
+                    print +="Draw. ";
+                }
+
+              
+
+            }
+
+
+            if(card1.Get_Num() == card2.Get_Num()){
+                print += "over in draw";
+                p1->cardes_Taken.push_back(card1);
+                p2->cardes_Taken.push_back(card2);
+            }
+            Turn_Of_game.push_back(print);
+        }
+
+
+    }
     else{
-        throw std::runtime_error("ran out of cards");
+        throw std::runtime_error("The game is illegal");
     }
 
+
+
+
     }
 
+ 
 
+ void Game::printLastTurn(){
+    cout<< Turn_Of_game[Turn_Of_game.size()-1] <<endl;
 
-//  ווינ מי שניצח להגדיל את הקונט  
  }
-
 
  void Game::playAll(){
 
@@ -188,9 +311,7 @@ void Game::printLog(){
 
 
 
-void Game::printLastTurn() {
 
-}
 // print the last turn stats. For example:
 // Alice played Queen of Hearts Bob played 5 of Spades. Alice wins.
 // Alice played 6 of Hearts Bob played 6 of Spades. Draw. Alice played 10 of Clubs Bob played 10 of Diamonds. draw. Alice played Jack of Clubs Bob played King of Diamonds. Bob wins.
