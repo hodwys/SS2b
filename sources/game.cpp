@@ -20,10 +20,6 @@ Game::Game(Player &one, Player &two){
 }
 //constructor 
 
-void Game::playAll(){
-    
-} //playes the game untill the end
-
 
 // print Card
 void Game::print_card(size_t g){
@@ -111,12 +107,72 @@ void Game:: div_card(){
 }
 
 
+void Game::printWiner(){
+
+    if(p1-> cardes_Taken.size()>p2-> cardes_Taken.size()){
+
+        cout<<p1->getString()<< "'winn" <<endl;
+    }
+
+    else if(p2-> cardes_Taken.size()>p1-> cardes_Taken.size()){
+
+        cout<<p2->getString()<<"winn" << endl;
+    }
+
+    else{
+        cout<<"The game ended in a draw"<<endl;
+    }
+
+ } // prints the name of the winning player
+
+
+
  void Game::playTurn(){
 
+    if(p2->stack_card.size()>0){
 
+
+
+        
+
+
+
+
+
+    else{
+        throw std::runtime_error("ran out of cards");
+    }
+
+    }
+
+
+
+//  ווינ מי שניצח להגדיל את הקונט  
  }
 
 
+ void Game::playAll(){
+
+    while(p1->stack_card.size()>0){
+        playTurn();
+    }
+    
+} //playes the game untill the end
+
+
+
+
+ void Game::printStats(){
+
+
+
+}// for each player prints basic statistics: win rate, cards won, <other stats you want to print>. Also print the draw rate and amount of draws that happand. (draw within a draw counts as 2 draws. )
+
+// כמה פעמים זכה
+// כמה קלפים זכה
+// דברים אחרים
+// מספר התיקו כולל תיקו בתוך תיקו
+// אחוזי התיקו
 
 
 
@@ -125,18 +181,10 @@ void Game:: div_card(){
 
 
 
-void Game::printWiner(){
-
- } // prints the name of the winning player
 
 void Game::printLog(){
 
  } // prints all the turns played one line per turn (same format as game.printLastTurn())
-
- void Game::printStats(){
-}// for each player prints basic statistics: win rate, cards won, <other stats you want to print>. Also print the draw rate and amount of draws that happand. (draw within a draw counts as 2 draws. )
-
-
 
 
 

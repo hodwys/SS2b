@@ -16,13 +16,12 @@ class Player{
     
     private:
         std::string nameP;
-        bool in_play;
-        vector<Card> cardes_Taken;
-       
- 
-    
+
     public:
+        int count_win;
+        bool in_play;
         vector<Card> stack_card;
+        vector<Card> cardes_Taken;
         Player(){}
         Player(std::string name);
 

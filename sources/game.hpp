@@ -31,8 +31,7 @@ class Game{
         void Shuffle();
         void div_card();
         void print_stack(size_t g);
-
-
+        
 
 
         void playAll(); //playes the game untill the end

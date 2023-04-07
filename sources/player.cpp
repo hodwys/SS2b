@@ -6,6 +6,7 @@
 Player::Player(std::string str){
     nameP=str;
     in_play = false;
+    count_win = 0;
     this->cardes_Taken = {};
     this->stack_card = {};
 }// constructor 
