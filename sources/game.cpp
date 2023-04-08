@@ -258,7 +258,7 @@ void Game::printWiner(){
                         print += p1->getString() + " wins ";
                         Card_temp.push_back(card1);
                         Card_temp.push_back(card2);
-                        for(size_t i= 0; i<Card_temp.size(); i++ ){
+                        while(Card_temp.size()>0){
                             p1->cardes_Taken.push_back(Card_temp.back());
                             Card_temp.pop_back();
                         }
@@ -271,7 +271,7 @@ void Game::printWiner(){
                         print += p2->getString() + " wins   ";
                         Card_temp.push_back(card1);
                         Card_temp.push_back(card2);
-                        for(size_t i= 0; i<Card_temp.size(); i++){
+                        while(Card_temp.size()>0){
                             p2->cardes_Taken.push_back(Card_temp.back());
                             Card_temp.pop_back();
                         }
@@ -281,7 +281,7 @@ void Game::printWiner(){
                         return;
                     }
 
-                    else{
+                    else if (card2.Get_Num() == card1.Get_Num()){
                         print +="Draw. ";
                     }
 
