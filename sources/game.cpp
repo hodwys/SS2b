@@ -195,15 +195,15 @@ void Game::printWiner(){
             return;
         
         }
-        else{
-
+        else if(card2.Get_Num() == card1.Get_Num()){
+            print +="Draw. ";
+            draw++;
           //  Turn_Of_game.push_back(print);
 
             //p1->cardesTaken() + p2->cardesTaken() == 52
             vector<Card> Card_temp = {};
             while(p2->stack_card.size()>0 && card1.Get_Num() == card2.Get_Num()){
-                print +="Draw. ";
-                draw++; 
+ 
 
                 if(p2->stack_card.size() == 1){
                 //נשארו 2 קלפים לכל אחד
@@ -307,6 +307,7 @@ void Game::printWiner(){
                         }
                     
                     }
+                    
 
                 }
                 Turn_Of_game.push_back(print);
