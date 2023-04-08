@@ -25,7 +25,7 @@ class Game{
         Game(Player &One, Player &Two);
         vector<Card> Card_Of_game;
         vector<string> Turn_Of_game;
-        int draw;
+        float draw;
         
         void creating_the_card();
         void print_card(size_t g);

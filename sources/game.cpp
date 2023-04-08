@@ -11,6 +11,7 @@
 Game::Game(Player &one, Player &two){
     p1 = &one;
     p2 = &two;
+
     
     creating_the_card();
     cout<<"/////////////////////////////"<<endl;
@@ -119,12 +120,33 @@ void Game::printWiner(){
         cout<<p2->getString()<<" wins. " << endl;
     }
 
-    else if(p2-> cardes_Taken.size() == p1-> cardes_Taken.size())
+    else if(p2-> cardesTaken() == p1-> cardesTaken())
     {
         cout<<"The game ended in a draw. "<<endl;
     }
+// if(p1->stacksize() == 0 && p2->stacksize() == 0){
+//         if(this->p1->cardesTaken() > this->p2->cardesTaken()){
+//             cout << this->p1->getString() << endl;
+//         }
+//         else if(this->p1->cardesTaken() < this->p2->cardesTaken()){
+//             cout << this->p2->getString() << endl;
+//         }
+//         else{
+//             cout << this->p1->cardesTaken() << endl;
+//             cout << this->p2->cardesTaken() << endl;
+//             cout << "there is a draw" << endl;
+//         }
+//     }
+//     else{
 
- } // prints the name of the winning player
+//         cout << "-------- GAME IS NOT OVER---------" << endl;
+//     }
+
+
+
+
+ } 
+ // prints the name of the winning player
 
 
 
@@ -174,21 +196,23 @@ void Game::printWiner(){
         }
         else{
             print +="Draw. ";
+            draw++; 
           //  Turn_Of_game.push_back(print);
 
             if(p2->stack_card.size() == 1){
                 //נשארו 2 קלפים לכל אחד
-                for(size_t j= 0; j<p1->stack_card.size(); j++){
-                    p1->cardes_Taken.push_back(p1->stack_card[j]);
-                    p2->cardes_Taken.push_back(p2->stack_card[j]);
-                }
-
+                // for(size_t j= 0; j<p1->stack_card.size(); j++){
+                //     p1->cardes_Taken.push_back(p1->stack_card[j]);
+                //     p2->cardes_Taken.push_back(p2->stack_card[j]);
+                // }
+                cout<<"line 204"<<endl;
+                return;
             }
-
+            vector<Card> Card_temp;
             while(p2->stack_card.size()>1 && card1.Get_Num() == card2.Get_Num()){
-                draw++;                 
+                
 
-                vector<Card> Card_temp;
+                
                 Card_temp.push_back(card1);
                 Card_temp.push_back(card2);
 
@@ -226,6 +250,7 @@ void Game::printWiner(){
                     for(size_t i= 0; i<Card_temp.size(); i++ ){
                         p1->cardes_Taken.push_back(Card_temp[i]);
                     }
+                    Card_temp={};
                     p1->count_win++;
                     break;                    
                 }
@@ -235,6 +260,7 @@ void Game::printWiner(){
                     for(size_t i= 0; i<Card_temp.size(); i++){
                         p2->cardes_Taken.push_back(Card_temp[i]);
                     }
+                    Card_temp={};
                     p2->count_win++;
                     break;
                 }
@@ -246,26 +272,36 @@ void Game::printWiner(){
               
 
             }
-
+// && (p2->cardesTaken() + p1->cardesTaken()!=52)
 
             if(card1.Get_Num() == card2.Get_Num()){
                 print += "over in draw";
-                p1->cardes_Taken.push_back(card1);
-                p2->cardes_Taken.push_back(card2);
+                 //p1->cardes_Taken.push_back(card1);
+//                 p2->cardes_Taken.push_back(card2);
+
+                for(size_t i= 0; i<Card_temp.size(); i++){
+                    if(i%2 ==0 ){
+                        p2->cardes_Taken.push_back(Card_temp[i]);
+                    }
+                    else{
+                        p1->cardes_Taken.push_back(Card_temp[i]);
+                    }
+                   
+                }
+
             }
             Turn_Of_game.push_back(print);
         }
 
 
     }
-    else{
+    else
+    {
         throw std::runtime_error("The game is illegal");
     }
 
-
-
-
-    }
+}
+ 
 
  
 
@@ -273,6 +309,12 @@ void Game::printWiner(){
     cout<< Turn_Of_game[Turn_Of_game.size()-1] <<endl;
 
  }
+void Game:: printLog(){
+
+for(size_t k=0; k<Turn_Of_game.size(); k++){
+    cout<< Turn_Of_game[k] <<endl;
+}
+}
 
  void Game::playAll(){
 
@@ -283,19 +325,21 @@ void Game::printWiner(){
 } //playes the game untill the end
 
 
+void Game::printStats(){
 
+cout<<"amount of draws: "<< to_string(draw)<<endl;
 
- void Game::printStats(){
+float pre= (draw/Turn_Of_game.size()*100);
+cout<<" of draws: "<< to_string(pre)<<"%"<<endl;
+cout <<p1->getString() <<" won "<< p1->cardesTaken() << endl; // prints the amount of cards this player has won. 
+cout <<p2->getString()<< " won "<< p2->cardesTaken() << endl;
+cout<< p1->getString() <<" won "<<p1->count_win<<" timse "<<endl;
+cout<< p2->getString() <<" won "<<p2->count_win<<" timse "<<endl;
 
 
 
 }// for each player prints basic statistics: win rate, cards won, <other stats you want to print>. Also print the draw rate and amount of draws that happand. (draw within a draw counts as 2 draws. )
 
-// כמה פעמים זכה
-// כמה קלפים זכה
-// דברים אחרים
-// מספר התיקו כולל תיקו בתוך תיקו
-// אחוזי התיקו
 
 
 
@@ -304,15 +348,4 @@ void Game::printWiner(){
 
 
 
-
-void Game::printLog(){
-
- } // prints all the turns played one line per turn (same format as game.printLastTurn())
-
-
-
-
-// print the last turn stats. For example:
-// Alice played Queen of Hearts Bob played 5 of Spades. Alice wins.
-// Alice played 6 of Hearts Bob played 6 of Spades. Draw. Alice played 10 of Clubs Bob played 10 of Diamonds. draw. Alice played Jack of Clubs Bob played King of Diamonds. Bob wins.
 
