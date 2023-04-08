@@ -153,7 +153,7 @@ void Game::printWiner(){
  void Game::playTurn(){
 
     if(p2->stack_card.size()>0 && (p1->getString() != p2->getString())){
-
+        bool ended= false;
         Card card1 = p1->stack_card.back();
         p1->stack_card.pop_back();
 
@@ -199,101 +199,116 @@ void Game::printWiner(){
             draw++; 
           //  Turn_Of_game.push_back(print);
 
-            if(p2->stack_card.size() == 1){
-                //נשארו 2 קלפים לכל אחד
-                // for(size_t j= 0; j<p1->stack_card.size(); j++){
-                //     p1->cardes_Taken.push_back(p1->stack_card[j]);
-                //     p2->cardes_Taken.push_back(p2->stack_card[j]);
-                // }
-                cout<<"line 204"<<endl;
-                return;
-            }
+            
             vector<Card> Card_temp;
-            while(p2->stack_card.size()>1 && card1.Get_Num() == card2.Get_Num()){
-                
+            while(p2->stack_card.size()>0 && card1.Get_Num() == card2.Get_Num()){
 
-                
-                Card_temp.push_back(card1);
-                Card_temp.push_back(card2);
+                if(p2->stack_card.size() == 1){
+                //נשארו 2 קלפים לכל אחד
 
-                Card_temp.push_back(p1->stack_card.back());
-                p1->stack_card.pop_back();
+                    p1->cardes_Taken.push_back(p1->stack_card.back());
+                    p1->stack_card.pop_back();
+                    p1->cardes_Taken.push_back(card1);
 
-                Card_temp.push_back(p2->stack_card.back());
-                p2->stack_card.pop_back();
+            
+                    p2->cardes_Taken.push_back(p2->stack_card.back());
+                    p2->stack_card.pop_back(); 
+                    p2->cardes_Taken.push_back(card2);   
 
-                card1 = p1->stack_card.back();
-                p1->stack_card.pop_back();
-                card2 = p2->stack_card.back();
-                p2->stack_card.pop_back();
-                Card_temp.push_back(card1);
-                Card_temp.push_back(card2);
-
-
-                print += p1->getString();
-                print += " played ";
-                print += card1.Get_number();
-                print += " of ";
-                print += card1.Get_shape();
-
-
-                print += p2->getString();
-                print += " played ";
-                print += card2.Get_number();
-                print += " of ";
-                print += card2.Get_shape();
-
-
-                if(card1.Get_Num() > card2.Get_Num()){
-                    print += p1->getString() + " wins ";
-
-                    for(size_t i= 0; i<Card_temp.size(); i++ ){
-                        p1->cardes_Taken.push_back(Card_temp[i]);
-                    }
-                    Card_temp={};
-                    p1->count_win++;
-                    break;                    
+            
+                cout<<"/n line 204"<<endl;
+                return;
                 }
-
-                else if(card2.Get_Num() > card1.Get_Num()){
-                    print += p2->getString() + " wins   ";
-                    for(size_t i= 0; i<Card_temp.size(); i++){
-                        p2->cardes_Taken.push_back(Card_temp[i]);
-                    }
-                    Card_temp={};
-                    p2->count_win++;
-                    break;
-                }
-
                 else{
-                    print +="Draw. ";
-                }
 
-              
+                    Card_temp.push_back(card1);
+                    Card_temp.push_back(card2);
 
-            }
-// && (p2->cardesTaken() + p1->cardesTaken()!=52)
+                    Card_temp.push_back(p1->stack_card.back());
+                    p1->stack_card.pop_back();
 
-            if(card1.Get_Num() == card2.Get_Num()){
-                print += "over in draw";
-                 //p1->cardes_Taken.push_back(card1);
-//                 p2->cardes_Taken.push_back(card2);
+                    Card_temp.push_back(p2->stack_card.back());
+                    p2->stack_card.pop_back();
 
-                for(size_t i= 0; i<Card_temp.size(); i++){
-                    if(i%2 ==0 ){
-                        p2->cardes_Taken.push_back(Card_temp[i]);
+                    card1 = p1->stack_card.back();
+                    p1->stack_card.pop_back();
+                    card2 = p2->stack_card.back();
+                    p2->stack_card.pop_back();
+                    Card_temp.push_back(card1);
+                    Card_temp.push_back(card2);
+
+
+                    print += p1->getString();
+                    print += " played ";
+                    print += card1.Get_number();
+                    print += " of ";
+                    print += card1.Get_shape();
+
+
+                    print += p2->getString();
+                    print += " played ";
+                    print += card2.Get_number();
+                    print += " of ";
+                    print += card2.Get_shape();
+
+
+                    if(card1.Get_Num() > card2.Get_Num()){
+                        print += p1->getString() + " wins ";
+
+                        for(size_t i= 0; i<Card_temp.size(); i++ ){
+                            p1->cardes_Taken.push_back(Card_temp.back());
+                            Card_temp.pop_back();
+                        }
+                        ended = true;
+                        p1->count_win++;
+                        break;                    
                     }
+
+                    else if(card2.Get_Num() > card1.Get_Num()){
+                        print += p2->getString() + " wins   ";
+                        for(size_t i= 0; i<Card_temp.size(); i++){
+                            p2->cardes_Taken.push_back(Card_temp.back());
+                            Card_temp.pop_back();
+                        }
+                    // Card_temp={};
+                        p2->count_win++;
+                        ended = true;
+                        break;
+                    }
+
                     else{
-                        p1->cardes_Taken.push_back(Card_temp[i]);
+                        print +="Draw. ";
                     }
-                   
+
+                
+
                 }
+    // && (p2->cardesTaken() + p1->cardesTaken()!=52)
 
+                if(card1.Get_Num() == card2.Get_Num() &&  !ended){
+                    print += "over in draw";
+                    //p1->cardes_Taken.push_back(card1);
+    //                 p2->cardes_Taken.push_back(card2);
+
+                    for(size_t i= 0; i<Card_temp.size(); i++){
+                        if(i%2 ==0 ){
+                            p2->cardes_Taken.push_back(Card_temp.back());
+                            Card_temp.pop_back();
+                        }
+                        else{
+                            p1->cardes_Taken.push_back(Card_temp.back());
+                            Card_temp.pop_back();
+                        
+                        }
+                    
+                    }
+
+                }
+                Turn_Of_game.push_back(print);
             }
-            Turn_Of_game.push_back(print);
+
+
         }
-
-
     }
     else
     {
@@ -302,9 +317,6 @@ void Game::printWiner(){
 
 }
  
-
- 
-
  void Game::printLastTurn(){
     cout<< Turn_Of_game[Turn_Of_game.size()-1] <<endl;
 
