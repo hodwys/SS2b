@@ -37,6 +37,7 @@ int main() {
     game.printLog(); // prints all the turns played one line per turn (same format as game.printLastTurn())
     cout <<"p2 "<< p2.cardesTaken() << endl; // prints the amount of cards this player has won. 
     cout <<"p1 "<< p1.cardesTaken() << endl; // prints the amount of cards this player has won. 
+    cout << p1.cardesTaken()+p2.cardesTaken() << endl;
  //   cout <<"p2 "<< p2.stack_card.size() << endl; // prints the amount of cards this player has won. 
  ///   cout <<"p1 "<< p1.stack_card.size() << endl; // prints the amount of cards this player has won. 
 
