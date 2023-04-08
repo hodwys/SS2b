@@ -76,9 +76,9 @@ void Game:: Shuffle(){
     std::shuffle(this->Card_Of_game.begin(), this->Card_Of_game.end(), g);
 
     // Print the shuffled cards
-    for(size_t j = 1; j<=this->Card_Of_game.size(); j++){
+    //for(size_t j = 1; j<=this->Card_Of_game.size(); j++){
         //print_card(j);
-    }
+    //}
 }
 
 void Game::print_stack(size_t g){
@@ -184,7 +184,7 @@ void Game::printWiner(){
             p1->cardes_Taken.push_back(card2);
             p1->count_win++;
             Turn_Of_game.push_back(print);
-
+            return;
         }
         else if(card2.Get_Num() > card1.Get_Num()){
             print += p2->getString() + " wins ";
@@ -192,16 +192,18 @@ void Game::printWiner(){
             p2->cardes_Taken.push_back(card2);
             p2->count_win++;
             Turn_Of_game.push_back(print);
+            return;
         
         }
         else{
-            print +="Draw. ";
-            draw++; 
+
           //  Turn_Of_game.push_back(print);
 
-            
-            vector<Card> Card_temp;
+            //p1->cardesTaken() + p2->cardesTaken() == 52
+            vector<Card> Card_temp = {};
             while(p2->stack_card.size()>0 && card1.Get_Num() == card2.Get_Num()){
+                print +="Draw. ";
+                draw++; 
 
                 if(p2->stack_card.size() == 1){
                 //נשארו 2 קלפים לכל אחד
@@ -261,7 +263,7 @@ void Game::printWiner(){
                         }
                         ended = true;
                         p1->count_win++;
-                        break;                    
+                        return;                    
                     }
 
                     else if(card2.Get_Num() > card1.Get_Num()){
@@ -273,7 +275,7 @@ void Game::printWiner(){
                     // Card_temp={};
                         p2->count_win++;
                         ended = true;
-                        break;
+                        return;
                     }
 
                     else{
@@ -307,7 +309,6 @@ void Game::printWiner(){
                 Turn_Of_game.push_back(print);
             }
 
-
         }
     }
     else
@@ -332,6 +333,8 @@ for(size_t k=0; k<Turn_Of_game.size(); k++){
 
     while(p1->stack_card.size()>0){
         playTurn();
+        //printLastTurn();
+       printStats();
     }
     
 } //playes the game untill the end
