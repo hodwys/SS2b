@@ -42,7 +42,7 @@ void Game::creating_the_card(){
     string s="";
     for(size_t j=1; j<53; j++){
         if(j<14){
-            s = "dim ";
+            s = "diamond ";
         }
         else if(j<27){
             s = "heart ";
@@ -82,10 +82,7 @@ void Game:: Shuffle(){
     std::mt19937 g(rd()); // Seed the random number generator
     std::shuffle(this->Card_Of_game.begin(), this->Card_Of_game.end(), g);
 
-    // Print the shuffled cards
-    //for(size_t j = 1; j<=this->Card_Of_game.size(); j++){
-        //print_card(j);
-    //}
+
 }
 
 // void Game::print_stack(size_t g){
@@ -109,7 +106,6 @@ void Game:: div_card(){
             p2->Puse_stack_card(this->Card_Of_game[i]);  
         }
         
-       // print_stack(i);
     }
 }
 
@@ -130,34 +126,10 @@ void Game::printWiner(){
     {
         cout<<"The game ended in a draw. "<<endl;
     }
-// if(p1->stacksize() == 0 && p2->stacksize() == 0){
-//         if(this->p1->cardesTaken() > this->p2->cardesTaken()){
-//             cout << this->p1->getString() << endl;
-//         }
-//         else if(this->p1->cardesTaken() < this->p2->cardesTaken()){
-//             cout << this->p2->getString() << endl;
-//         }
-//         else{
-//             cout << this->p1->cardesTaken() << endl;
-//             cout << this->p2->cardesTaken() << endl;
-//             cout << "there is a draw" << endl;
-//         }
-//     }
-//     else{
-
-//         cout << "-------- GAME IS NOT OVER---------" << endl;
-//     }
-
-
-
 
  } 
- // prints the name of the winning player
-
-
 
  void Game::playTurn(){
-
 
     if(p2-> Get_stack_card() >0 && (p1 != p2)){
         bool ended= false;       
@@ -199,8 +171,7 @@ void Game::printWiner(){
             p1->Push_cardes_Taken(card2);
             p1->Set_count_win(p1->Get_count_win()+1);
             Turn_Of_game.push_back(print);
-            // cout<<print<<"///////////////////////////////////////////////////////////////////////"<<endl;
-            // cout<<"line 187///////////////////////////////////////////////////////"<<endl;
+          
             if(p1->Get_stack_card()==0){
                 p1->Set_in_play(false);
                 p2->Set_in_play(false);
@@ -213,9 +184,7 @@ void Game::printWiner(){
             p2->Push_cardes_Taken(card2);
             p2->Set_count_win(p2->Get_count_win()+1);
             Turn_Of_game.push_back(print);
-           // cout<<print<<"///////////////////////////////////////////////////////////////////////"<<endl;
-
-           // cout<<"line 197///////////////////////////////////////////////////////"<<endl;
+          
             if(p1->Get_stack_card()==0){
                 p1->Set_in_play(false);
                 p2->Set_in_play(false);
@@ -226,28 +195,9 @@ void Game::printWiner(){
         else if(card2.Get_Num() == card1.Get_Num()){
             print +="Draw. ";
             draw++;
-          //  Turn_Of_game.push_back(print);
-
-            //p1->cardesTaken() + p2->cardesTaken() == 52
+         
             vector<Card> Card_temp = {};
             while(p2->Get_stack_card()>0){
- 
-
-
-
-// void Puse_stack_card(Card cardto){
-//             this->stack_card.push_back(cardto);
-//         }
-
-//         Card back_stack_card(){
-//             return this->stack_card.back();
-//         }
-
-//         void pop_stack_card(){
-//             this->stack_card.pop_back();
-//         }
-
-
 
                 if(p2->Get_stack_card()== 1){
                 //נשארו 2 קלפים לכל אחד
@@ -276,8 +226,6 @@ void Game::printWiner(){
                     }
                     }   
 
-            
-                  //  cout<<"/n line 204///////////////////////////////////////////////////////////"<<endl;
                     Turn_Of_game.push_back(print);
                     if(p1->Get_stack_card()==0){
                         p1->Set_in_play(false);
@@ -300,9 +248,6 @@ void Game::printWiner(){
                     p1->pop_stack_card();
                     card2 = p2-> back_stack_card();
                     p2->pop_stack_card();
-                    // Card_temp.push_back(card1);
-                    // Card_temp.push_back(card2);
-
 
                     print += p1->getString();
                     print += " played ";
@@ -317,7 +262,6 @@ void Game::printWiner(){
                     print += " of ";
                     print += card2.Get_shape();
 
-                    //bool isok4 = !(card2.Get_Num()==2 && card1.Get_Num()==100);
 
                     isok = ((card2.Get_Num()!=2 && card2.Get_Num()!=1 && card1.Get_Num()==1)) ||(card1.Get_Num() ==2 && card2.Get_Num() ==1);
                     isok2 = ((card1.Get_Num()!=2 && card1.Get_Num()!=1 && card2.Get_Num()==1)) ||(card2.Get_Num() ==2 && card1.Get_Num() ==1);
@@ -333,7 +277,7 @@ void Game::printWiner(){
                         ended = true;
                         p1->Set_count_win(p1->Get_count_win()+1);
                         Turn_Of_game.push_back(print);
-                     //   cout<<"line 269///////////////////////////////////////////////////////"<<endl;
+
                         if(p1->Get_stack_card()==0){
                             p1->Set_in_play(false);
                             p2->Set_in_play(false);
@@ -349,11 +293,11 @@ void Game::printWiner(){
                             p2->Push_cardes_Taken(Card_temp.back());
                             Card_temp.pop_back();
                         }
-                    // Card_temp={};
+
                         p2->Set_count_win(p2->Get_count_win()+1);
                         ended = true;
                         Turn_Of_game.push_back(print);
-                     //   cout<<"line 290///////////////////////////////////////////////////////"<<endl;
+
                         if(p1->Get_stack_card()==0){
                             p1->Set_in_play(false);
                             p2->Set_in_play(false);
@@ -364,38 +308,13 @@ void Game::printWiner(){
                     else if (card2.Get_Num() == card1.Get_Num()){
                         print +="Draw. ";
                         draw++;
-                    //    cout<< "line 298////////////////////////////////////////////////////////"<<endl;
+
                         continue;
                     }
 
                 
 
                 }
-    // && (p2->cardesTaken() + p1->cardesTaken()!=52)
-
-    //             if(card1.Get_Num() == card2.Get_Num() &&  !ended){
-    //                 print += "over in draw";
-    //                 //p1->cardes_Taken.push_back(card1);
-    // //                 p2->cardes_Taken.push_back(card2);
-    //                 cout<<"jechi jechi//////////////////////////////////////////////////////////"<<endl;
-
-    //                 for(size_t i= 0; i<Card_temp.size(); i++){
-    //                     if(i%2 ==0 ){
-    //                         p2->cardes_Taken.push_back(Card_temp.back());
-    //                         Card_temp.pop_back();
-    //                     }
-    //                     else{
-    //                         p1->cardes_Taken.push_back(Card_temp.back());
-    //                         Card_temp.pop_back();
-                        
-    //                     }
-                    
-    //                 }
-                    
-
-    //             }
-                
-              //  cout<<"line 329///////////////////////////////////////////////////////"<<endl;
 
             }
 
@@ -413,18 +332,15 @@ void Game::printWiner(){
                         Card_temp.pop_back(); 
                         i++;
                     }
-                //print+="lime 347";
-                
-               // cout<<"line 349///////////////////////////////////////////////////////"<<endl;
 
  
                 }
             }
             Turn_Of_game.push_back(print);
-            // אם זה תיקו אבל הקלף האחרון ולא נכנסו בכלל לוייל
+
             p1->Push_cardes_Taken(card1);
             p2->Push_cardes_Taken(card2);
-          //  cout<<"line 330///////////////////////////////////////////////////////"<<endl;
+     
             if(p1->Get_stack_card()==0){
                 p1->Set_in_play(false);
                 p2->Set_in_play(false);
@@ -455,8 +371,6 @@ for(size_t k=0; k<Turn_Of_game.size(); k++){
 
     while(p1->Get_stack_card()>0){
         playTurn();
-        printLastTurn();
-      // printStats();
     }
     p1->Set_in_play(false);
     p2->Set_in_play(false);
