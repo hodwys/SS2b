@@ -160,7 +160,7 @@ void Game::printWiner(){
         bool isok = ((card2.Get_Num()!=2 && card2.Get_Num()!=1 && card1.Get_Num()==1)) ||(card1.Get_Num() ==2 && card2.Get_Num() ==1);
         bool isok2 = ((card1.Get_Num()!=2 && card1.Get_Num()!=1 && card2.Get_Num()==1)) ||(card2.Get_Num() ==2 && card1.Get_Num() ==1);
 
-        cout<<isok2<<endl;
+       
   //      bool isok3 = !(card1.Get_Num()==2 && card2.Get_Num()==100);
 
 
@@ -200,8 +200,7 @@ void Game::printWiner(){
             while(p2->Get_stack_card()>0){
 
                 if(p2->Get_stack_card()== 1){
-                //נשארו 2 קלפים לכל אחד
-                  //  cout<< "line 234///////////////"<<endl;
+              
                     p1->Push_cardes_Taken(p1->back_stack_card());
                     p1->pop_stack_card();
                     p1->Push_cardes_Taken(card1);
