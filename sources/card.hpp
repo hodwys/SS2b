@@ -20,8 +20,8 @@ class Card{
         
 
     public:
-        Card(){}
-        Card(int num, string shape, string number);
+        //Card(){}
+        Card(int num=1, string shape = "dim", string number = "1");
 
         int Get_Num();
         string Get_shape();

@@ -3,6 +3,19 @@
 #include <stdexcept>
 #include "card.hpp"
 
+
+
+// Player::Player(){
+//     nameP="";
+//     in_play = false;
+//     count_win = 0;
+//     this->cardes_Taken = {};
+//     this->stack_card = {};
+// }
+
+
+
+
 Player::Player(std::string str){
     nameP=str;
     in_play = false;

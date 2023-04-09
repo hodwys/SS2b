@@ -34,7 +34,7 @@ int main() {
 
     game.playAll(); //playes the game untill the end
    // game.printWiner(); // prints the name of the winning player
-    game.printLog(); // prints all the turns played one line per turn (same format as game.printLastTurn())
+    //game.printLog(); // prints all the turns played one line per turn (same format as game.printLastTurn())
     cout <<"p2 "<< p2.cardesTaken() << endl; // prints the amount of cards this player has won. 
     cout <<"p1 "<< p1.cardesTaken() << endl; // prints the amount of cards this player has won. 
     cout << p1.cardesTaken()+p2.cardesTaken() << endl;

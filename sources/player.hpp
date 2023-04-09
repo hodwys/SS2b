@@ -22,7 +22,7 @@ class Player{
         bool in_play;
         vector<Card> stack_card;
         vector<Card> cardes_Taken;
-        Player(){}
+        // Player(){}
         Player(std::string name);
 
         std::string getString();

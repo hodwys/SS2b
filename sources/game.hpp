@@ -21,17 +21,17 @@ class Game{
 
     public:
 
-        Game(){}
+        //Game(){};
         Game(Player &One, Player &Two);
         vector<Card> Card_Of_game;
         vector<string> Turn_Of_game;
-        float draw;
+        float draw=0;
         
         void creating_the_card();
-        void print_card(size_t g);
+        void print_card(size_t sizeg);
         void Shuffle();
         void div_card();
-        void print_stack(size_t g);
+        void print_stack(size_t sizeg);
         
 
 

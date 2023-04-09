@@ -8,6 +8,15 @@
 #include <algorithm>
 #include <random>
 
+
+
+// Game::Game(){
+
+//     vector<Card> Card_Of_game ={};
+//     vector<string> Turn_Of_game ={};
+//     float draw=0;
+
+// }
 Game::Game(Player &one, Player &two){
     p1 = &one;
     p2 = &two;
@@ -152,7 +161,7 @@ void Game::printWiner(){
 
  void Game::playTurn(){
 
-    if(p2->stack_card.size()>0 && (p1->getString() != p2->getString())){
+    if(p2->stack_card.size()>0 && (p1 != p2)){
         bool ended= false;
         Card card1 = p1->stack_card.back();
         p1->stack_card.pop_back();
@@ -178,20 +187,31 @@ void Game::printWiner(){
 
 // who gana
 
-        if(card1.Get_Num() > card2.Get_Num()){
+        bool isok = !(card2.Get_Num()==2 && card1.Get_Num()==100);
+        bool isok2 = !(card1.Get_Num()==2 && card2.Get_Num()==100);
+        cout<<isok2<<endl;
+  //      bool isok3 = !(card1.Get_Num()==2 && card2.Get_Num()==100);
+
+
+        
+        if(card1.Get_Num() > card2.Get_Num()  && isok){
             print += p1->getString() + " wins ";
             p1->cardes_Taken.push_back(card1);
             p1->cardes_Taken.push_back(card2);
             p1->count_win++;
             Turn_Of_game.push_back(print);
+            cout<<"line 187///////////////////////////////////////////////////////"<<endl;
+
             return;
         }
-        else if(card2.Get_Num() > card1.Get_Num()){
+        else if(card2.Get_Num() > card1.Get_Num() && isok2){
             print += p2->getString() + " wins ";
             p2->cardes_Taken.push_back(card1);
             p2->cardes_Taken.push_back(card2);
             p2->count_win++;
             Turn_Of_game.push_back(print);
+            cout<<"line 197///////////////////////////////////////////////////////"<<endl;
+
             return;
         
         }
@@ -218,8 +238,9 @@ void Game::printWiner(){
                     p2->cardes_Taken.push_back(card2);   
 
             
-                cout<<"/n line 204"<<endl;
-                return;
+                    cout<<"/n line 204///////////////////////////////////////////////////////////"<<endl;
+                    Turn_Of_game.push_back(print);
+                    return;
                 }
                 else{
 
@@ -253,8 +274,8 @@ void Game::printWiner(){
                     print += " of ";
                     print += card2.Get_shape();
 
-
-                    if(card1.Get_Num() > card2.Get_Num()){
+                    //bool isok4 = !(card2.Get_Num()==2 && card1.Get_Num()==100);
+                    if(card1.Get_Num() > card2.Get_Num() && isok){
                         print += p1->getString() + " wins ";
                         Card_temp.push_back(card1);
                         Card_temp.push_back(card2);
@@ -264,10 +285,12 @@ void Game::printWiner(){
                         }
                         ended = true;
                         p1->count_win++;
-                        return;                    
-                    }
+                        Turn_Of_game.push_back(print);
+                        cout<<"line 269///////////////////////////////////////////////////////"<<endl;
+                        return;          
 
-                    else if(card2.Get_Num() > card1.Get_Num()){
+                    }
+                    else if(card2.Get_Num() > card1.Get_Num() && isok2 ){
                         print += p2->getString() + " wins   ";
                         Card_temp.push_back(card1);
                         Card_temp.push_back(card2);
@@ -278,11 +301,17 @@ void Game::printWiner(){
                     // Card_temp={};
                         p2->count_win++;
                         ended = true;
+                        Turn_Of_game.push_back(print);
+                        cout<<"line 290///////////////////////////////////////////////////////"<<endl;
+
                         return;
                     }
 
                     else if (card2.Get_Num() == card1.Get_Num()){
                         print +="Draw. ";
+                        draw++;
+                        cout<< "line 298////////////////////////////////////////////////////////"<<endl;
+                        continue;
                     }
 
                 
@@ -294,6 +323,7 @@ void Game::printWiner(){
                     print += "over in draw";
                     //p1->cardes_Taken.push_back(card1);
     //                 p2->cardes_Taken.push_back(card2);
+                    cout<<"jechi jechi//////////////////////////////////////////////////////////"<<endl;
 
                     for(size_t i= 0; i<Card_temp.size(); i++){
                         if(i%2 ==0 ){
@@ -310,8 +340,38 @@ void Game::printWiner(){
                     
 
                 }
-                Turn_Of_game.push_back(print);
+                
+                cout<<"line 329///////////////////////////////////////////////////////"<<endl;
+
             }
+
+            if(Card_temp.size() >0){
+                while(Card_temp.size()>0){
+                    int i=0;
+                    if(i%2 == 0){
+                        p2->cardes_Taken.push_back(Card_temp.back());
+                        Card_temp.pop_back(); 
+                        i++;
+
+                    }
+                    else{
+                        p1->cardes_Taken.push_back(Card_temp.back());
+                        Card_temp.pop_back(); 
+                        i++;
+                    }
+                //print+="lime 347";
+                
+                cout<<"line 349///////////////////////////////////////////////////////"<<endl;
+
+ 
+                }
+            }
+            Turn_Of_game.push_back(print);
+            // אם זה תיקו אבל הקלף האחרון ולא נכנסו בכלל לוייל
+            p1->cardes_Taken.push_back(card1);
+            p2->cardes_Taken.push_back(card2);
+            cout<<"line 330///////////////////////////////////////////////////////"<<endl;
+            return;
 
         }
     }
@@ -337,8 +397,8 @@ for(size_t k=0; k<Turn_Of_game.size(); k++){
 
     while(p1->stack_card.size()>0){
         playTurn();
-        //printLastTurn();
-       printStats();
+        printLastTurn();
+      // printStats();
     }
     
 } //playes the game untill the end
