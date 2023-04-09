@@ -17,15 +17,17 @@ class Game{
     private:
         Player *p1;
         Player *p2;
+        vector<Card> Card_Of_game;
+        float draw=0;
+        vector<string> Turn_Of_game;
 
 
     public:
 
         //Game(){};
         Game(Player &One, Player &Two);
-        vector<Card> Card_Of_game;
-        vector<string> Turn_Of_game;
-        float draw=0;
+       
+        
         
         void creating_the_card();
         void print_card(size_t sizeg);

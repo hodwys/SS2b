@@ -10,13 +10,6 @@
 
 
 
-// Game::Game(){
-
-//     vector<Card> Card_Of_game ={};
-//     vector<string> Turn_Of_game ={};
-//     float draw=0;
-
-// }
 Game::Game(Player &one, Player &two){
     p1 = &one;
     p2 = &two;
@@ -56,7 +49,7 @@ void Game::creating_the_card(){
             s = "clover ";
         }
         if((j) % 13 == 1){
-        this->Card_Of_game.push_back( Card(100,s,"Ace "));    
+        this->Card_Of_game.push_back( Card(1,s,"Ace "));    
         }
         else if(j%13 == 0){
 
@@ -90,26 +83,25 @@ void Game:: Shuffle(){
     //}
 }
 
-void Game::print_stack(size_t g){
-        if(g<26){
-            cout<<p1->stack_card[g%26].Get_number()<<endl;
-        }
-        else{
-            cout<<p2->stack_card[g%26].Get_number()<<endl;
-        }
-         cout<<p1->stack_card.size()<<endl;
-         cout<<p2->stack_card.size()<<endl;
-}
+// void Game::print_stack(size_t g){
+//         if(g<26){
+//             cout<<p1->stack_card[g%26].Get_number()<<endl;
+//         }
+//         else{
+//             cout<<p2->stack_card[g%26].Get_number()<<endl;
+//         }
+//          cout<<p1->stack_card.size()<<endl;
+//          cout<<p2->stack_card.size()<<endl;
+// }
 
 void Game:: div_card(){
     for(size_t i=0 ; i<52; i++){
         if(i<26){
-            p1->stack_card.push_back(this->Card_Of_game[i]);
-
+            p1->Puse_stack_card(this->Card_Of_game[i]);
         }
         else{
 
-            p2->stack_card.push_back(this->Card_Of_game[i]);  
+            p2->Puse_stack_card(this->Card_Of_game[i]);  
         }
         
        // print_stack(i);
@@ -161,13 +153,13 @@ void Game::printWiner(){
 
  void Game::playTurn(){
 
-    if(p2->stack_card.size()>0 && (p1 != p2)){
-        bool ended= false;
-        Card card1 = p1->stack_card.back();
-        p1->stack_card.pop_back();
+    if(p2-> Get_stack_card() >0 && (p1 != p2)){
+        bool ended= false;       
+        Card card1 = p1->back_stack_card();
+        p1->pop_stack_card();
 
-        Card card2 = p2->stack_card.back();
-        p2->stack_card.pop_back();
+        Card card2 = p2->back_stack_card();
+        p2->pop_stack_card();
 
         string one = p1->getString();
         one += " played ";
@@ -187,29 +179,33 @@ void Game::printWiner(){
 
 // who gana
 
-        bool isok = (!(card2.Get_Num()==2 && card1.Get_Num()==100) || (card1.Get_Num()==2 && card2.Get_Num()==100));
-        bool isok2 = (!(card1.Get_Num()==2 && card2.Get_Num()==100) || (card2.Get_Num()==2 && card1.Get_Num()==100));
+        bool isok = ((card2.Get_Num()!=2 && card2.Get_Num()!=1 && card1.Get_Num()==1)) ||(card1.Get_Num() ==2 && card2.Get_Num() ==1);
+        bool isok2 = ((card1.Get_Num()!=2 && card1.Get_Num()!=1 && card2.Get_Num()==1)) ||(card2.Get_Num() ==2 && card1.Get_Num() ==1);
+
         cout<<isok2<<endl;
   //      bool isok3 = !(card1.Get_Num()==2 && card2.Get_Num()==100);
 
 
-        
-        if(card1.Get_Num() > card2.Get_Num()  && isok){
+
+        if(((card1.Get_Num() > card2.Get_Num()) && (card2.Get_Num() != 1)|| isok)){
             print += p1->getString() + " wins ";
             p1->cardes_Taken.push_back(card1);
             p1->cardes_Taken.push_back(card2);
-            p1->count_win++;
+            p1->Set_count_win(p1->Get_count_win()+1);
             Turn_Of_game.push_back(print);
+            cout<<print<<"///////////////////////////////////////////////////////////////////////"<<endl;
             cout<<"line 187///////////////////////////////////////////////////////"<<endl;
 
             return;
         }
-        else if(card2.Get_Num() > card1.Get_Num() && isok2){
+        else if(((card2.Get_Num() > card1.Get_Num()) && (card1.Get_Num() != 1) || isok2)){
             print += p2->getString() + " wins ";
             p2->cardes_Taken.push_back(card1);
             p2->cardes_Taken.push_back(card2);
-            p2->count_win++;
+            p2->Set_count_win(p2->Get_count_win()+1);
             Turn_Of_game.push_back(print);
+            cout<<print<<"///////////////////////////////////////////////////////////////////////"<<endl;
+
             cout<<"line 197///////////////////////////////////////////////////////"<<endl;
 
             return;
@@ -222,20 +218,51 @@ void Game::printWiner(){
 
             //p1->cardesTaken() + p2->cardesTaken() == 52
             vector<Card> Card_temp = {};
-            while(p2->stack_card.size()>0 && card1.Get_Num() == card2.Get_Num()){
+            while(p2->Get_stack_card()>0){
  
 
-                if(p2->stack_card.size() == 1){
-                //נשארו 2 קלפים לכל אחד
 
-                    p1->cardes_Taken.push_back(p1->stack_card.back());
-                    p1->stack_card.pop_back();
+
+// void Puse_stack_card(Card cardto){
+//             this->stack_card.push_back(cardto);
+//         }
+
+//         Card back_stack_card(){
+//             return this->stack_card.back();
+//         }
+
+//         void pop_stack_card(){
+//             this->stack_card.pop_back();
+//         }
+
+
+
+                if(p2->Get_stack_card()== 1){
+                //נשארו 2 קלפים לכל אחד
+                    cout<< "line 234///////////////"<<endl;
+                    p1->cardes_Taken.push_back(p1->back_stack_card());
+                    p1->pop_stack_card();
                     p1->cardes_Taken.push_back(card1);
 
             
-                    p2->cardes_Taken.push_back(p2->stack_card.back());
-                    p2->stack_card.pop_back(); 
-                    p2->cardes_Taken.push_back(card2);   
+                    p2->cardes_Taken.push_back(p2->back_stack_card());
+                    p2->pop_stack_card(); 
+                    p2->cardes_Taken.push_back(card2);
+
+                    while(Card_temp.size()> 0 ){
+                    int i=0;
+                    if(i%2 == 0){
+                        p2->cardes_Taken.push_back(Card_temp.back());
+                        Card_temp.pop_back(); 
+                        i++;
+
+                    }
+                    else{
+                        p1->cardes_Taken.push_back(Card_temp.back());
+                        Card_temp.pop_back(); 
+                        i++;
+                    }
+                    }   
 
             
                     cout<<"/n line 204///////////////////////////////////////////////////////////"<<endl;
@@ -247,16 +274,16 @@ void Game::printWiner(){
                     Card_temp.push_back(card1);
                     Card_temp.push_back(card2);
 
-                    Card_temp.push_back(p1->stack_card.back());
-                    p1->stack_card.pop_back();
+                    Card_temp.push_back(p1->back_stack_card());
+                    p1->pop_stack_card();
 
-                    Card_temp.push_back(p2->stack_card.back());
-                    p2->stack_card.pop_back();
+                    Card_temp.push_back(p2->back_stack_card());
+                    p2->pop_stack_card();
 
-                    card1 = p1->stack_card.back();
-                    p1->stack_card.pop_back();
-                    card2 = p2->stack_card.back();
-                    p2->stack_card.pop_back();
+                    card1 = p1-> back_stack_card();
+                    p1->pop_stack_card();
+                    card2 = p2-> back_stack_card();
+                    p2->pop_stack_card();
                     // Card_temp.push_back(card1);
                     // Card_temp.push_back(card2);
 
@@ -275,7 +302,11 @@ void Game::printWiner(){
                     print += card2.Get_shape();
 
                     //bool isok4 = !(card2.Get_Num()==2 && card1.Get_Num()==100);
-                    if(card1.Get_Num() > card2.Get_Num() && isok){
+
+                    isok = ((card2.Get_Num()!=2 && card2.Get_Num()!=1 && card1.Get_Num()==1)) ||(card1.Get_Num() ==2 && card2.Get_Num() ==1);
+                    isok2 = ((card1.Get_Num()!=2 && card1.Get_Num()!=1 && card2.Get_Num()==1)) ||(card2.Get_Num() ==2 && card1.Get_Num() ==1);
+
+                    if(((card1.Get_Num() > card2.Get_Num()) && card2.Get_Num() != 1) || isok){
                         print += p1->getString() + " wins ";
                         Card_temp.push_back(card1);
                         Card_temp.push_back(card2);
@@ -284,13 +315,13 @@ void Game::printWiner(){
                             Card_temp.pop_back();
                         }
                         ended = true;
-                        p1->count_win++;
+                        p1->Set_count_win(p1->Get_count_win()+1);
                         Turn_Of_game.push_back(print);
                         cout<<"line 269///////////////////////////////////////////////////////"<<endl;
                         return;          
 
                     }
-                    else if(card2.Get_Num() > card1.Get_Num() && isok2 ){
+                    else if(card2.Get_Num() > card1.Get_Num() && (card1.Get_Num() != 1) || isok2 ){
                         print += p2->getString() + " wins   ";
                         Card_temp.push_back(card1);
                         Card_temp.push_back(card2);
@@ -299,7 +330,7 @@ void Game::printWiner(){
                             Card_temp.pop_back();
                         }
                     // Card_temp={};
-                        p2->count_win++;
+                        p2->Set_count_win(p2->Get_count_win()+1);
                         ended = true;
                         Turn_Of_game.push_back(print);
                         cout<<"line 290///////////////////////////////////////////////////////"<<endl;
@@ -319,27 +350,27 @@ void Game::printWiner(){
                 }
     // && (p2->cardesTaken() + p1->cardesTaken()!=52)
 
-                if(card1.Get_Num() == card2.Get_Num() &&  !ended){
-                    print += "over in draw";
-                    //p1->cardes_Taken.push_back(card1);
-    //                 p2->cardes_Taken.push_back(card2);
-                    cout<<"jechi jechi//////////////////////////////////////////////////////////"<<endl;
+    //             if(card1.Get_Num() == card2.Get_Num() &&  !ended){
+    //                 print += "over in draw";
+    //                 //p1->cardes_Taken.push_back(card1);
+    // //                 p2->cardes_Taken.push_back(card2);
+    //                 cout<<"jechi jechi//////////////////////////////////////////////////////////"<<endl;
 
-                    for(size_t i= 0; i<Card_temp.size(); i++){
-                        if(i%2 ==0 ){
-                            p2->cardes_Taken.push_back(Card_temp.back());
-                            Card_temp.pop_back();
-                        }
-                        else{
-                            p1->cardes_Taken.push_back(Card_temp.back());
-                            Card_temp.pop_back();
+    //                 for(size_t i= 0; i<Card_temp.size(); i++){
+    //                     if(i%2 ==0 ){
+    //                         p2->cardes_Taken.push_back(Card_temp.back());
+    //                         Card_temp.pop_back();
+    //                     }
+    //                     else{
+    //                         p1->cardes_Taken.push_back(Card_temp.back());
+    //                         Card_temp.pop_back();
                         
-                        }
+    //                     }
                     
-                    }
+    //                 }
                     
 
-                }
+    //             }
                 
                 cout<<"line 329///////////////////////////////////////////////////////"<<endl;
 
@@ -395,7 +426,7 @@ for(size_t k=0; k<Turn_Of_game.size(); k++){
 
  void Game::playAll(){
 
-    while(p1->stack_card.size()>0){
+    while(p1->Get_stack_card()>0){
         playTurn();
         printLastTurn();
       // printStats();
@@ -412,8 +443,8 @@ float pre= (draw/Turn_Of_game.size()*100);
 cout<<" of draws: "<< to_string(pre)<<"%"<<endl;
 cout <<p1->getString() <<" won "<< p1->cardesTaken() << endl; // prints the amount of cards this player has won. 
 cout <<p2->getString()<< " won "<< p2->cardesTaken() << endl;
-cout<< p1->getString() <<" won "<<p1->count_win<<" timse "<<endl;
-cout<< p2->getString() <<" won "<<p2->count_win<<" timse "<<endl;
+cout<< p1->getString() <<" won "<<p1->Get_count_win()<<" timse "<<endl;
+cout<< p2->getString() <<" won "<<p2->Get_count_win()<<" timse "<<endl;
 
 
 

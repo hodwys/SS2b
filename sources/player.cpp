@@ -42,3 +42,28 @@ string Player::getString(){
     return this->nameP;
 }
 
+
+    int Get_count_win(){
+        return this->count_win;
+    }
+    
+    void Set_count_win(int point){
+        this->count_win = point;
+    }
+
+    int Get_stack_card(){
+
+    return this->stack_card.size();
+    }
+
+    void Puse_stack_card(Card cardto){
+        this->stack_card.push_back(cardto);
+    }
+
+    Card back_stack_card(){
+        return this->stack_card.back();
+    }
+
+    void pop_stack_card(){
+        this->stack_card.pop_back();
+    }

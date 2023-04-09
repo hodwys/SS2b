@@ -16,11 +16,12 @@ class Player{
     
     private:
         std::string nameP;
-
-    public:
         int count_win;
-        bool in_play;
         vector<Card> stack_card;
+    public:
+        
+        bool in_play;
+        
         vector<Card> cardes_Taken;
         // Player(){}
         Player(std::string name);
@@ -30,6 +31,20 @@ class Player{
         int stacksize(); //prints the amount of cards left. should be 21 but can be less if a draw was played
 
         int cardesTaken();
+
+        int Get_count_win();
+        
+        void Set_count_win();
+
+        int Get_stack_card();
+
+        void Puse_stack_card();
+
+        Card back_stack_card();
+
+        void pop_stack_card();
+                    
+
 
 };
 
