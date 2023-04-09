@@ -187,8 +187,8 @@ void Game::printWiner(){
 
 // who gana
 
-        bool isok = !(card2.Get_Num()==2 && card1.Get_Num()==100);
-        bool isok2 = !(card1.Get_Num()==2 && card2.Get_Num()==100);
+        bool isok = (!(card2.Get_Num()==2 && card1.Get_Num()==100) || (card1.Get_Num()==2 && card2.Get_Num()==100));
+        bool isok2 = (!(card1.Get_Num()==2 && card2.Get_Num()==100) || (card2.Get_Num()==2 && card1.Get_Num()==100));
         cout<<isok2<<endl;
   //      bool isok3 = !(card1.Get_Num()==2 && card2.Get_Num()==100);
 
