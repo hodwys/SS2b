@@ -13,7 +13,12 @@
 Game::Game(Player &one, Player &two){
     p1 = &one;
     p2 = &two;
+    if(p1->Get_in_play()==true || p2->Get_in_play()== true){
+        throw std::runtime_error("the player alredy play");
+    }
 
+    p1->Set_in_play(true);
+    p2->Set_in_play(true);
     
     creating_the_card();
     cout<<"/////////////////////////////"<<endl;
@@ -153,6 +158,7 @@ void Game::printWiner(){
 
  void Game::playTurn(){
 
+
     if(p2-> Get_stack_card() >0 && (p1 != p2)){
         bool ended= false;       
         Card card1 = p1->back_stack_card();
@@ -189,25 +195,31 @@ void Game::printWiner(){
 
         if(((card1.Get_Num() > card2.Get_Num()) && (card2.Get_Num() != 1)|| isok)){
             print += p1->getString() + " wins ";
-            p1->cardes_Taken.push_back(card1);
-            p1->cardes_Taken.push_back(card2);
+            p1->Push_cardes_Taken(card1);
+            p1->Push_cardes_Taken(card2);
             p1->Set_count_win(p1->Get_count_win()+1);
             Turn_Of_game.push_back(print);
-            cout<<print<<"///////////////////////////////////////////////////////////////////////"<<endl;
-            cout<<"line 187///////////////////////////////////////////////////////"<<endl;
-
+            // cout<<print<<"///////////////////////////////////////////////////////////////////////"<<endl;
+            // cout<<"line 187///////////////////////////////////////////////////////"<<endl;
+            if(p1->Get_stack_card()==0){
+                p1->Set_in_play(false);
+                p2->Set_in_play(false);
+            }
             return;
         }
         else if(((card2.Get_Num() > card1.Get_Num()) && (card1.Get_Num() != 1) || isok2)){
             print += p2->getString() + " wins ";
-            p2->cardes_Taken.push_back(card1);
-            p2->cardes_Taken.push_back(card2);
+            p2->Push_cardes_Taken(card1);
+            p2->Push_cardes_Taken(card2);
             p2->Set_count_win(p2->Get_count_win()+1);
             Turn_Of_game.push_back(print);
-            cout<<print<<"///////////////////////////////////////////////////////////////////////"<<endl;
+           // cout<<print<<"///////////////////////////////////////////////////////////////////////"<<endl;
 
-            cout<<"line 197///////////////////////////////////////////////////////"<<endl;
-
+           // cout<<"line 197///////////////////////////////////////////////////////"<<endl;
+            if(p1->Get_stack_card()==0){
+                p1->Set_in_play(false);
+                p2->Set_in_play(false);
+            }
             return;
         
         }
@@ -239,34 +251,38 @@ void Game::printWiner(){
 
                 if(p2->Get_stack_card()== 1){
                 //נשארו 2 קלפים לכל אחד
-                    cout<< "line 234///////////////"<<endl;
-                    p1->cardes_Taken.push_back(p1->back_stack_card());
+                  //  cout<< "line 234///////////////"<<endl;
+                    p1->Push_cardes_Taken(p1->back_stack_card());
                     p1->pop_stack_card();
-                    p1->cardes_Taken.push_back(card1);
+                    p1->Push_cardes_Taken(card1);
 
             
-                    p2->cardes_Taken.push_back(p2->back_stack_card());
+                    p2->Push_cardes_Taken(p2->back_stack_card());
                     p2->pop_stack_card(); 
-                    p2->cardes_Taken.push_back(card2);
+                    p2->Push_cardes_Taken(card2);
 
                     while(Card_temp.size()> 0 ){
                     int i=0;
                     if(i%2 == 0){
-                        p2->cardes_Taken.push_back(Card_temp.back());
+                        p2->Push_cardes_Taken(Card_temp.back());
                         Card_temp.pop_back(); 
                         i++;
 
                     }
                     else{
-                        p1->cardes_Taken.push_back(Card_temp.back());
+                        p1->Push_cardes_Taken(Card_temp.back());
                         Card_temp.pop_back(); 
                         i++;
                     }
                     }   
 
             
-                    cout<<"/n line 204///////////////////////////////////////////////////////////"<<endl;
+                  //  cout<<"/n line 204///////////////////////////////////////////////////////////"<<endl;
                     Turn_Of_game.push_back(print);
+                    if(p1->Get_stack_card()==0){
+                        p1->Set_in_play(false);
+                        p2->Set_in_play(false);
+                    }
                     return;
                 }
                 else{
@@ -311,13 +327,17 @@ void Game::printWiner(){
                         Card_temp.push_back(card1);
                         Card_temp.push_back(card2);
                         while(Card_temp.size()>0){
-                            p1->cardes_Taken.push_back(Card_temp.back());
+                            p1->Push_cardes_Taken(Card_temp.back());
                             Card_temp.pop_back();
                         }
                         ended = true;
                         p1->Set_count_win(p1->Get_count_win()+1);
                         Turn_Of_game.push_back(print);
-                        cout<<"line 269///////////////////////////////////////////////////////"<<endl;
+                     //   cout<<"line 269///////////////////////////////////////////////////////"<<endl;
+                        if(p1->Get_stack_card()==0){
+                            p1->Set_in_play(false);
+                            p2->Set_in_play(false);
+                        }
                         return;          
 
                     }
@@ -326,22 +346,25 @@ void Game::printWiner(){
                         Card_temp.push_back(card1);
                         Card_temp.push_back(card2);
                         while(Card_temp.size()>0){
-                            p2->cardes_Taken.push_back(Card_temp.back());
+                            p2->Push_cardes_Taken(Card_temp.back());
                             Card_temp.pop_back();
                         }
                     // Card_temp={};
                         p2->Set_count_win(p2->Get_count_win()+1);
                         ended = true;
                         Turn_Of_game.push_back(print);
-                        cout<<"line 290///////////////////////////////////////////////////////"<<endl;
-
+                     //   cout<<"line 290///////////////////////////////////////////////////////"<<endl;
+                        if(p1->Get_stack_card()==0){
+                            p1->Set_in_play(false);
+                            p2->Set_in_play(false);
+                        }
                         return;
                     }
 
                     else if (card2.Get_Num() == card1.Get_Num()){
                         print +="Draw. ";
                         draw++;
-                        cout<< "line 298////////////////////////////////////////////////////////"<<endl;
+                    //    cout<< "line 298////////////////////////////////////////////////////////"<<endl;
                         continue;
                     }
 
@@ -372,7 +395,7 @@ void Game::printWiner(){
 
     //             }
                 
-                cout<<"line 329///////////////////////////////////////////////////////"<<endl;
+              //  cout<<"line 329///////////////////////////////////////////////////////"<<endl;
 
             }
 
@@ -380,28 +403,32 @@ void Game::printWiner(){
                 while(Card_temp.size()>0){
                     int i=0;
                     if(i%2 == 0){
-                        p2->cardes_Taken.push_back(Card_temp.back());
+                        p2->Push_cardes_Taken(Card_temp.back());
                         Card_temp.pop_back(); 
                         i++;
 
                     }
                     else{
-                        p1->cardes_Taken.push_back(Card_temp.back());
+                        p1->Push_cardes_Taken(Card_temp.back());
                         Card_temp.pop_back(); 
                         i++;
                     }
                 //print+="lime 347";
                 
-                cout<<"line 349///////////////////////////////////////////////////////"<<endl;
+               // cout<<"line 349///////////////////////////////////////////////////////"<<endl;
 
  
                 }
             }
             Turn_Of_game.push_back(print);
             // אם זה תיקו אבל הקלף האחרון ולא נכנסו בכלל לוייל
-            p1->cardes_Taken.push_back(card1);
-            p2->cardes_Taken.push_back(card2);
-            cout<<"line 330///////////////////////////////////////////////////////"<<endl;
+            p1->Push_cardes_Taken(card1);
+            p2->Push_cardes_Taken(card2);
+          //  cout<<"line 330///////////////////////////////////////////////////////"<<endl;
+            if(p1->Get_stack_card()==0){
+                p1->Set_in_play(false);
+                p2->Set_in_play(false);
+            }
             return;
 
         }
@@ -431,6 +458,9 @@ for(size_t k=0; k<Turn_Of_game.size(); k++){
         printLastTurn();
       // printStats();
     }
+    p1->Set_in_play(false);
+    p2->Set_in_play(false);
+
     
 } //playes the game untill the end
 
